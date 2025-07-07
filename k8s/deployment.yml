@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: raspberry-award-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: raspberry-award-service
+  template:
+    metadata:
+      labels:
+        app: raspberry-award-service
+    spec:
+      containers:
+      - name: raspberry-award-service
+        image: raspberry-award-service:latest
+        ports:
+        - containerPort: 8080
+        livenessProbe:
+          httpGet:
+            path: /q/health/live
+            port: 8080
+          initialDelaySeconds: 20
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /q/health/ready
+            port: 8080
+          initialDelaySeconds: 20
+          periodSeconds: 10

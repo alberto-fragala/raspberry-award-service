@@ -1,0 +1,16 @@
+quarkus:
+  datasource:
+    db-kind: h2
+    jdbc:
+      url: "jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;INIT=RUNSCRIPT FROM 'classpath:db/migration/schema-etl.sql';"
+      driver: org.h2.Driver
+    username: sa
+    password: sa
+  log:
+    console:
+      json: false
+  smallrye-openapi:
+    info-title: "Raspberry Award Service API"
+    info-description: "API documentation for the Raspberry Award Service"
+  swagger-ui:
+    always-include: true

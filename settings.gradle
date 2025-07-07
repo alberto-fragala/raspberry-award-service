@@ -1,0 +1,2 @@
+rootProject.name = 'raspberry-award-service'
+include 'core', 'application'
