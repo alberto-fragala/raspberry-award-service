@@ -22,7 +22,8 @@ subprojects {
 
     dependencies {
         implementation enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}")
-        implementation("io.quarkus:quarkus-config-yaml")
+        implementation platform("org.jdbi:jdbi3-bom:${jdbiVersion}")
+        implementation "io.quarkus:quarkus-config-yaml"
 
         compileOnly "org.projectlombok:lombok:${lombokVersion}"
         annotationProcessor "org.projectlombok:lombok:${lombokVersion}"

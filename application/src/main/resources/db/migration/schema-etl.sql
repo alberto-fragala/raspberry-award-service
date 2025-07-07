@@ -51,64 +51,48 @@ FROM CSVREAD(
 -- 4) Popula tabela de producers (normalização)
 --    explodindo os campos “producers” por vírgula ou “ and ”
 -- ===================================================================
-WITH
-  w AS (
-    SELECT
-      id,
-      REPLACE(REPLACE(producers, ' and ', ','), ', ', ',') AS producers
-    FROM worst_film_awards
-  ),
-  split_cte (award_id, rest, producer) AS ( -- CTE recursiva para splitar os produtores
-    SELECT
-      id,
-      producers || ',',
-      ''
-    FROM w
-
-    UNION ALL
-
-    SELECT
-      award_id,
-      SUBSTRING(rest, LOCATE(',', rest) + 1),
-      TRIM(SUBSTRING(rest, 1, LOCATE(',', rest) - 1))
-    FROM split_cte
-    WHERE LOCATE(',', rest) > 0
-  )
 INSERT INTO producers(name)
-SELECT DISTINCT s.producer
-FROM split_cte s
-WHERE s.producer <> '';
+SELECT DISTINCT producer FROM (
+  WITH RECURSIVE split_cte(award_id, rest, producer) AS (
+      SELECT
+        id,
+        REPLACE(REPLACE(producers, ' and ', ','), ', ', ',') || ',',
+        ''
+      FROM worst_film_awards
+
+      UNION ALL
+
+      SELECT
+        award_id,
+        SUBSTRING(rest, LOCATE(',', rest) + 1),
+        TRIM(SUBSTRING(rest, 1, LOCATE(',', rest) - 1))
+      FROM split_cte
+      WHERE LOCATE(',', rest) > 0
+  )
+  SELECT producer FROM split_cte
+  WHERE producer <> ''
+) t;
 
 -- ===================================================================
 -- 5) Popula tabela de relacionamento worst_film_award_producer
 -- ===================================================================
-WITH
-  w AS (
-    SELECT
-      id,
-      REPLACE(REPLACE(producers, ' and ', ','), ', ', ',') AS producers
-    FROM worst_film_awards
-  ),
-  split_cte (award_id, rest, producer) AS ( -- CTE recursiva para splitar os produtores
-    SELECT
-      id,
-      producers || ',',
-      ''
-    FROM w
-
-    UNION ALL
-
-    SELECT
-      award_id,
-      SUBSTRING(rest, LOCATE(',', rest) + 1),
-      TRIM(SUBSTRING(rest, 1, LOCATE(',', rest) - 1))
-    FROM split_cte
-    WHERE LOCATE(',', rest) > 0
-  )
 INSERT INTO worst_film_award_producer (award_id, producer_id)
-SELECT
-  s.award_id,
-  p.id
-FROM split_cte s
-JOIN producers p ON p.name = s.producer
-WHERE s.producer <> '';
+SELECT award_id, p.id FROM (
+  WITH RECURSIVE split_cte(award_id, rest, producer) AS (
+      SELECT
+        id,
+        REPLACE(REPLACE(producers, ' and ', ','), ', ', ',') || ',',
+        ''
+      FROM worst_film_awards
+
+      UNION ALL
+
+      SELECT
+        award_id,
+        SUBSTRING(rest, LOCATE(',', rest) + 1),
+        TRIM(SUBSTRING(rest, 1, LOCATE(',', rest) - 1))
+      FROM split_cte
+      WHERE LOCATE(',', rest) > 0
+  )
+  SELECT award_id, producer FROM split_cte WHERE producer <> ''
+) s JOIN producers p ON p.name = s.producer;

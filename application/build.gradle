@@ -4,13 +4,13 @@ plugins {
 
 dependencies {
     implementation project(':core')
-    implementation 'io.quarkus:quarkus-resteasy-reactive'
-    implementation "io.quarkus:quarkus-resteasy-reactive-jackson"
+    implementation 'io.quarkus:quarkus-rest'
+    implementation 'io.quarkus:quarkus-rest-jackson'
     implementation 'io.quarkus:quarkus-jdbc-h2'
     implementation "io.quarkus:quarkus-agroal"
     implementation 'io.quarkus:quarkus-logging-json'
-    implementation "org.jdbi:jdbi3-core:${jdbiVersion}"
-    implementation "org.jdbi:jdbi3-sqlobject:${jdbiVersion}"
+    implementation "org.jdbi:jdbi3-core"
+    implementation "org.jdbi:jdbi3-sqlobject"
     implementation 'io.quarkus:quarkus-smallrye-openapi'
     implementation "io.quarkus:quarkus-swagger-ui"
 
