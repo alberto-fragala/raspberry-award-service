@@ -50,5 +50,5 @@ Criação automática do esquema de banco e carga de dados a partir de "movielis
 
 ### Endpoints
 - `GET /api/v1/awards/worst-film/producers-intervals`    Retorna produtores com maior e menor intervalo entre premiações;
-- `GET /api/v1/awards/worst-directors` *(to-do)*;
-- `GET /api/v1/awards/worst-actors` *(to-do)*;
+- `GET /api/v1/awards/worst-director` *(to-do)*;
+- `GET /api/v1/awards/worst-actor` *(to-do)*;
