@@ -41,7 +41,7 @@ SELECT
   PRODUCERS,
   CASE WHEN LOWER(WINNER) = 'yes' THEN TRUE ELSE FALSE END
 FROM CSVREAD(
-  'classpath:movielist.csv',
+  'classpath:&csv-name',
   NULL,
   'UTF-8',
   ';'

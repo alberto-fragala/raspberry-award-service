@@ -39,7 +39,7 @@ public class JdbiWorstFilmRepository implements WorstFilmRepository {
 
     private static final RowMapper<ProducerIntervals> PRODUCER_INTERVALS_MAPPER =
             (rs, ctx) -> ProducerIntervals.builder()
-                    .producer(rs.getString("producer"))
+                    .producerName(rs.getString("producer"))
                     .interval(rs.getInt("interval"))
                     .previousWin(rs.getInt("previousWin"))
                     .followingWin(rs.getInt("followingWin"))
