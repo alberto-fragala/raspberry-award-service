@@ -1,7 +1,7 @@
 year;title;studios;producers;winner
-2000;Movie A;Studio A;Prod X;yes
+2000;Movie A;Studio A;Prod X and Prod A;yes
 2001;Movie B;Studio B;Prod Y and Prod Z;yes
-2002;Movie C;Studio C;Prod X;yes
+2002;Movie C;Studio C;Prod X and Prod A;yes
 2005;Movie D;Studio D;Prod Y;yes
 2010;Movie E;Studio E;Prod Z;yes
 2015;Movie F;Studio F;Prod W, Prod X;yes

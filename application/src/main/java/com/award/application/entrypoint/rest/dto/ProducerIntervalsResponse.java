@@ -11,7 +11,7 @@ public record ProducerIntervalsResponse(
 
     public static ProducerIntervalsResponse of(ProducerIntervals producerIntervals) {
         return new ProducerIntervalsResponse(
-                producerIntervals.getProducer(),
+                producerIntervals.getProducerName(),
                 producerIntervals.getInterval(),
                 producerIntervals.getPreviousWin(),
                 producerIntervals.getFollowingWin()
